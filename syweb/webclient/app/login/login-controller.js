@@ -19,7 +19,6 @@ angular.module('LoginController', ['matrixService'])
                                     function($scope, $rootScope, $location, matrixService, dialogService) {
     'use strict';
     
-    
     // Assume that this is hosted on the home server, in which case the URL
     // contains the home server.
     var location_protocol = $location.protocol();
