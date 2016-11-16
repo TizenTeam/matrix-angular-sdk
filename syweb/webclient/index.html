@@ -2,24 +2,24 @@
 <html xmlns:ng="http://angularjs.org" ng-app="matrixWebClient" ng-controller="MatrixWebClientController">
 <head>
     <title>[matrix]</title>
-        
+
     <link rel="stylesheet" href="app/app.css">
     <link rel="stylesheet" href="app/mobile.css">
     <link rel="stylesheet" href="app/bootstrap.css">
     <link rel="stylesheet" href="lib/angular-dialog-service-5.2.6/dialogs.min.css">
-    
+
     <link rel="icon" href="favicon.ico">
-   
+
     <meta name="viewport" content="width=device-width">
-   
+
     <script type="text/javascript" src="lib/jquery-2.1.3.min.js"></script>
     <script src="lib/angular.min.js"></script>
     <script src="lib/angular-route.min.js"></script>
     <script src="lib/angular-sanitize.min.js"></script>
-<!--    
+<!--
     <script src="lib/jquery.peity.min.js"></script>
     <script src="lib/angular-peity.js"></script>
--->    
+-->
     <script src="lib/angular-spinner.min.js"></script>
     <script src="lib/angular-file-upload.min.js"></script>
     <script src="lib/spin.min.js"></script>
@@ -82,7 +82,7 @@
         </div>
     </div>
 
-    <div ng-class="isBadConnection ? 'header badConnection' : 'header goodConnection'">
+    <div ng-hide="'/login' == location || '/register' == location || '/reset-password' == location" ng-class="isBadConnection ? 'header badConnection' : 'header goodConnection'">
         <div id="headerBadConnection" ng-show="isBadConnection">
             Connection Lost
         </div>
@@ -134,11 +134,11 @@
                 </audio>
             </div>
 
-            <a href id="headerUserId" ng-click='goToUserPage(user_id)'>{{ user_id }}</a>
-            &nbsp;
-            <button ng-click='goToPage("/")'>Home</button>
-            <button ng-click='goToPage("settings")'>Settings</button>
-            <button ng-click="logout()">Log out</button>
+            <img ng-click='goToPage("/")' src="img/matrix-white.png" width="118" height="50" id="logo" />
+
+            <button ng-click='goToPage("/")'><img src="img/home.png" /></button>
+            <button ng-click='goToPage("settings")'><img src="img/settings.png" /></button>
+            <button ng-click="logout()"><img src="img/out.png" /></button>
         </div>
     </div>
 
@@ -157,7 +157,7 @@
 
     <div id="footer" ng-hide="location.indexOf('/room') === 0">
         <div id="footerContent">
-            &copy; 2014, 2015 OpenMarket Ltd
+            <a href="https://matrix.org/">Matrix.org</a>
         </div>
     </div>
 </body>

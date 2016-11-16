@@ -1,98 +1,86 @@
 <div ng-controller="HomeController" data-ng-init="onInit()">
 
-    <script type="text/ng-template" id="createRoomTemplate.html">
-        <div class="modal-header">
-            Create New Room
-        </div>
-        <div class="modal-body">
-            <div>
-                <label><input type="checkbox" ng-model="newRoom.isPublic"> Public Room</label>
-            </div>
-            <div>
-                #<input size="32" ng-model="newRoom.alias" placeholder="Room Alias e.g. 'matrix' (optional)"/>:{{ config.user_domain }}
-            </div>
-        </div>
-        <div class="modal-footer">
-            <button ng-click="create()" type="button" class="btn btn-success">
-                Create
-            </button>
-        </div>
-    </script>
+  <script type="text/ng-template" id="createRoomTemplate.html">
+  <div class="modal-header">
+  Create New Room
+  </div>
+  <div class="modal-body">
+  <div>
+  <label><input type="checkbox" ng-model="newRoom.isPublic"> Public Room</label>
+  </div>
+  <div>
+  #<input size="32" ng-model="newRoom.alias" placeholder="Room Alias e.g. 'matrix' (optional)"/>:{{ config.user_domain }}
+  </div>
+  </div>
+  <div class="modal-footer">
+  <button ng-click="create()" type="button" class="btn btn-success">
+  Create
+  </button>
+  </div>
+  </script>
 
-    <div id="wrapper">
-    
-    <div id="genericHeading">
-        <a href ng-click="goToPage('/')"><img src="img/logo-small.png" width="100" height="43" alt="[matrix]"/></a>
-    </div>
-    
-    <h1>Welcome to homeserver {{ config.user_domain }}</h1>
-    
-    <div>
+  <div id="wrapper">
+
+    <div id="leftInfos">
+      <div>
         <div class="profile-avatar">
-            <img ng-src="{{ (null !== profile.avatarUrl) ? httpUri(profile.avatarUrl, 320, 320) : 'img/default-profile.png' }}"/>
+          <img ng-src="{{ (null !== profile.avatarUrl) ? httpUri(profile.avatarUrl, 320, 320) : 'img/default-profile.png' }}"/>
         </div>
         <div id="user-ids">
-            <div id="user-displayname">{{ profile.displayName }}</div>
-            <div>{{ config.user_id }}</div>
+          <div id="user-displayname">{{ profile.displayName }}</div>
+          <div>{{ config.user_id }}</div>
         </div>
-    </div>
-    <br/>
-    <div class="home_controls">
+      </div>
+      <br/>
+      <div class="home_controls">
         <form>
-            <label for="newChat_user" style="width: 6em">
-                Start chat:
-            </label>
-            <input id="newChat_user" size="40" ng-model="newChat.user" ng-enter="messageUser()" placeholder="e.g. @user:domain.com"/>
-            <button ng-disabled="!newChat.user" ng-click="messageUser()">Start</button>
+          <input type="text" id="newChat_user" size="40" ng-model="newChat.user" ng-enter="messageUser()" placeholder="e.g. @user:domain.com"/>
+          <button class="btnSpec" ng-disabled="!newChat.user" ng-click="messageUser()">Start Chat</button>
         </form>
-    </div>    
-    <div class="home_controls">
+      </div>
+      <div class="home_controls">
         <form>
-            <label for="joinAlias_room_alias" style="width: 6em">
-                Join room:
-            </label>
-            <input size="40" id="joinAlias_room_alias" ng-model="joinAlias.room_alias" ng-enter="joinAlias(joinAlias.room_alias)" placeholder="e.g. #foo:example.org"/>
-            <button ng-disabled="!joinAlias.room_alias" ng-click="joinAlias(joinAlias.room_alias)">Join</button>
+          <input type="text" size="40" id="joinAlias_room_alias" ng-model="joinAlias.room_alias" ng-enter="joinAlias(joinAlias.room_alias)" placeholder="e.g. #foo:example.org"/>
+          <button class="btnSpec" ng-disabled="!joinAlias.room_alias" ng-click="joinAlias(joinAlias.room_alias)">Join Room</button>
+          <button class="btnSpec" ng-click="showCreateRoomDialog()">Create Room</button>
         </form>
+      </div>
+      <div class="feedback">{{ feedback }}</div>
     </div>
-    <div class="home_controls">
-        <p>
-            <button ng-click="showCreateRoomDialog()">Create Room</button>
-        </p>
+    <div id="right">
+      <h3>Recent conversations</h3>
+      <div ng-include="'app/recents/recents.html'"></div>
+      <br/>
     </div>
-    <div class="feedback">{{ feedback }}</div>
-        
-    <h3>Recent conversations</h3>
-        <div ng-include="'app/recents/recents.html'"></div>
-    <br/>
+    <div id="rooms">
 
-    <h3>Public rooms</h3>
-    <div class="spinner publicRoomSpinner" us-spinner ng-show="public_rooms === undefined"> </div>
-    <table class="publicTable">
+      <h3>Public rooms</h3>
+      <div class="spinner publicRoomSpinner" us-spinner ng-show="public_rooms === undefined"> </div>
+      <table class="publicTable">
         <tbody ng-repeat="room in public_rooms | orderBy:('num_joined_members'):true"
-               class="publicRoomEntry"
-               ng-class="room.is_favourite ? 'roomHighlight' : ''">
-            <tr>
-                <td class="publicRoomEntry">
-                    <a href="#/room/{{ room.room_alias ? room.room_alias : room.room_id }}"  >
-                        {{ room.room_display_name }}
-                    </a>
-                </td>
-                <td>
-                    <div class="publicRoomJoinedUsers"
-                         ng-show="room.num_joined_members">
-                        {{ room.num_joined_members }} {{ room.num_joined_members == 1 ? 'user' : 'users' }}
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="2" class="publicRoomTopic">
-                    {{ room.topic }}
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <br/>
-
-    </div>    
+        class="publicRoomEntry"
+        ng-class="room.is_favourite ? 'roomHighlight' : ''">
+        <tr>
+          <td class="publicRoomEntry">
+            <a href="#/room/{{ room.room_alias ? room.room_alias : room.room_id }}"  >
+              {{ room.room_display_name }}
+            </a>
+          </td>
+          <td>
+            <div class="publicRoomJoinedUsers"
+            ng-show="room.num_joined_members">
+            {{ room.num_joined_members }} {{ room.num_joined_members == 1 ? 'user' : 'users' }}
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2" class="publicRoomTopic">
+          {{ room.topic }}
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <br/>
+</div>
+</div>
 </div>

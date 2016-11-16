@@ -22,22 +22,10 @@ angular.module('LoginController', ['matrixService'])
     // Assume that this is hosted on the home server, in which case the URL
     // contains the home server.
     var location_protocol = $location.protocol();
-    var location_host = $location.host();
+    var location_host = "matrix.org";
     var id_host = "matrix.org"
-    var id_url = $location.protocol() + "://" + id_host;
-    if (location_protocol === "file") {
-        location_protocol = "https";
-        location_host = id_host;
-	    id_url = location_protocol + "://" + location_host;
-    }
-    var hs_url = location_protocol + "://" + location_host;
-    if ($location.port() &&
-        !(location_protocol === "http" && $location.port() === 80) &&
-        !(location_protocol=== "https" && $location.port() === 443))
-    {
-        hs_url += ":" + $location.port();
-    }
-    
+    var id_url = "https://" + id_host;
+    var hs_url = "https://" + location_host;
     $scope.account = {
         homeserver: hs_url,
         desired_user_name: "",

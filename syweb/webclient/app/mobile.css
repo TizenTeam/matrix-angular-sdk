@@ -10,49 +10,35 @@
 
 /** iPhones **/
 @media all and (max-device-width: 640px) {
-            
+
     #messageTableWrapper {
         margin-right: 0px ! important;
     }
-    
+
     .leftBlock {
         width: 8em ! important;
         font-size: 8px ! important;
     }
-    
+
     .rightBlock {
         width: 0px ! important;
         display: none ! important;
     }
-    
+
     .avatar {
         width: 36px ! important;
     }
-    
-    #header, .goodConnection {
-        background-color: transparent;
-    }
-        
-    #headerContent {
-        padding-right: 5px;
-        height: auto;
-        line-height: normal;
-    }
-    
-    #headerContent button {
-        font-size: 8px;
-    }
-    
+
     #messageTable,
     #wrapper,
     #controls {
         max-width: 640px ! important;
-    }    
-    
+    }
+
     #controls {
         padding: 0px;
     }
-    
+
     #headerUserId,
     #roomHeader img,
     #userIdCell,
@@ -64,16 +50,16 @@
     .extraControls {
         display: none;
     }
-    
+
     #buttonsCell {
         width: 60px ! important;
         padding-left: 20px ! important;
     }
-    
+
     #roomLogo {
         display: none;
     }
-        
+
     .bubble {
         font-size: 12px ! important;
         min-height: 20px ! important;
@@ -82,11 +68,11 @@
     #roomHeader {
         padding-top: 20px;
     }
-    
+
     .roomHeaderInfo {
         margin-right: 0px;
     }
-    
+
     #roomName {
         font-size: 12px ! important;
         margin-top: 0px ! important;
@@ -95,18 +81,18 @@
     .roomTopicSection {
         display: none;
     }
-        
+
     #roomPage {
         top: 40px ! important;
         left: 5px ! important;
         right: 5px ! important;
         bottom: 40px ! important;
     }
-    
+
     #controlPanel {
         height: 31px;
     }
-        
+
     /* stop zoom on select */
     select:focus,
     textarea,
@@ -114,5 +100,32 @@
     {
         font-size: 16px ! important;
     }
-    
+
+    #leftInfos {
+      width: 400px;
+      float: none;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    #right, #rooms {
+      width: 100%;
+      margin-left: 0;
+      margin-right: 0;
+      height: auto;
+    }
+
+    #logo {
+      visibility: hidden;
+      width: 0;
+    }
+
+    #header {
+      position: relative;
+    }
+
+    #headerContent {
+      position: relative;
+      text-align: center;
+    }
 }
