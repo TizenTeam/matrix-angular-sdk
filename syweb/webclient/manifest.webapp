@@ -1,0 +1,21 @@
+{
+    "version": "0.0.0",
+    "name": "matrix",
+    "description": "matrix im",
+    "launch_path": "/index.html",
+    "icons": {
+        "16": "/img/icons/logo-16.png",
+        "48": "/img/icons/logo-48.png",
+        "60": "/img/icons/logo-60.png",
+        "128": "/img/icons/logo-128.png"
+    },
+    "developer": {
+        "name": "MatrixOrg",
+        "url": "http://matrix.org/"
+    },
+    "installs_allowed_from": [
+        "*"
+    ],
+    "default_locale": "en",
+    "permissions": {}
+}
