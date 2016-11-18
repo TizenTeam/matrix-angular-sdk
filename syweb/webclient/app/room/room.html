@@ -5,14 +5,14 @@
             <pre> {{event_selected.event | json}} </pre>
         </div>
         <div class="modal-footer">
-            <button ng-click="redact()" type="button" class="btn btn-danger redact-button" 
+            <button ng-click="redact()" type="button" class="btn btn-danger redact-button"
              ng-disabled="!room.current_room_state.state('m.room.power_levels').content.redact || !modelService.getUserPowerLevel(room_id, state.user_id) || modelService.getUserPowerLevel(room_id, state.user_id) < room.current_room_state.state('m.room.power_levels').content.redact"
              ng-hide="event_selected.send_state === 'unsent'"
              title="Delete this event on all home servers. This cannot be undone.">
                 Redact
             </button>
-            
-            <button ng-click="resend()" type="button" class="btn btn-info redact-button" 
+
+            <button ng-click="resend()" type="button" class="btn btn-info redact-button"
              ng-show="event_selected.send_state === 'unsent'">
                 Resend
             </button>
@@ -26,8 +26,8 @@
     <script type="text/ng-template" id="roomInfoTemplate.html">
         <div class="modal-body">
             <span>
-               Invite a user: 
-                    <input ng-model="userIDToInvite" size="32" type="text" ng-enter="inviteUser()" ng-disabled="state.permission_denied" placeholder="User ID (ex:@user:homeserver)"/>     
+               Invite a user:
+                    <input ng-model="userIDToInvite" size="32" type="text" ng-enter="inviteUser()" ng-disabled="state.permission_denied" placeholder="User ID (ex:@user:homeserver)"/>
                     <button ng-click="inviteUser()" ng-disabled="state.permission_denied">Invite</button>
             </span>
             <br/>
@@ -49,7 +49,7 @@
                     </button>
                 </td>
                 <td class="room-info-event-content" width="70%">
-                    <textarea class="room-info-textarea-content" msd-elastic ng-model="event.content" asjson></textarea> 
+                    <textarea class="room-info-textarea-content" msd-elastic ng-model="event.content" asjson></textarea>
                 </td>
             </tr>
             <tr>
@@ -126,31 +126,30 @@
 
     <div id="roomPage">
     <div id="roomWrapper">
-        
+
     <div id="roomRecentsTableWrapper">
         <div ng-include="'app/recents/recents.html'"></div>
     </div>
-    
-    <div id="sidebar-resizer" 
-        resizer="vertical" 
-        resizer-width="6" 
-        resizer-left="#roomRecentsTableWrapper" 
+
+    <div id="sidebar-resizer"
+        resizer="vertical"
+        resizer-width="6"
+        resizer-left="#roomRecentsTableWrapper"
         resizer-right="#messageTableWrapper"
         resizer-max="320">
     </div>
-    
+
     <div id="usersTableWrapper" ng-hide="state.permission_denied">
         <div ng-repeat="member in room.now.members | orderMembersList" class="userAvatar">
             <div class="userAvatarFrame" ng-class="(member.user.event.content.presence === 'online' ? 'online' : (member.user.event.content.presence === 'unavailable' ? 'unavailable' : '')) + ' ' + (member.event.content.membership == 'invite' ? 'invited' : '')">
-                <img class="userAvatarImage mouse-pointer" 
+                <img class="userAvatarImage mouse-pointer"
                      ng-click="$parent.goToUserPage(member.id)"
-                     ng-src="{{member.aevent.httpUri(member.event.content.avatar_url, 96, 96, 'crop') || member.aevent.identicon()}}" 
+                     ng-src="{{member.aevent.httpUri(member.event.content.avatar_url, 96, 96, 'crop') || member.aevent.identicon()}}"
                      err-src="img/default-profile.png"
                      alt="{{ member.event.content.displayname || member.id.substr(0, member.id.indexOf(':')) }}"
                      title="{{ member.id }} - power: {{ member.power_level }}"
                      width="80" height="80"/>
                 <img src="img/keyboard.png" ng-show="member.typing && member.id != state.user_id" class="typingIcon" />
-                <!-- <div class="userPowerLevel" ng-style="{'width': member.powerLevelNorm +'%'}"></div> -->
             </div>
             <div class="userName">
                 <img style="position: relative; top: 2px;" ng-show="member.power_level_norm" width="12" height="12" alt="power: {{member.power_level_norm}}" src="img/p/p{{ member.power_level_norm }}.png"/>
@@ -159,9 +158,9 @@
             </div>
         </div>
     </div>
-    
-    <div id="messageTableWrapper" 
-         ng-hide="state.permission_denied" 
+
+    <div id="messageTableWrapper"
+         ng-hide="state.permission_denied"
          ng-style="{ 'visibility': state.messages_visibility }"
          keep-scroll>
         <table id="messageTable" infinite-scroll="paginateMore()" aria-live="polite" role="log">
@@ -205,7 +204,7 @@
                                 </span>
                             </span>
                         </span>
-                        <span class="msg_meta" ng-if="'invite' === msg.e.content.membership && msg.changed_key === 'membership' || 
+                        <span class="msg_meta" ng-if="'invite' === msg.e.content.membership && msg.changed_key === 'membership' ||
                                      'ban' === msg.e.content.membership && msg.changed_key === 'membership'">
                             {{ msg.sender.name }}
                             {{ {"invite": "invited", "ban": "banned"}[msg.e.content.membership] }}
@@ -213,25 +212,25 @@
                             <span ng-if="msg.e.prev_content && 'ban' === msg.e.prev_content.membership && msg.e.content.reason">
                                 : {{ msg.e.content.reason }}
                             </span>
-                        </span>                        
+                        </span>
                         <span class="msg_meta" ng-if="msg.changed_key === 'displayname'">
                             {{ msg.e.user_id }} changed their display name from {{ msg.e.prev_content.displayname }} to {{ msg.e.content.displayname }}
                         </span>
-                        
+
                         <span ng-show='msg.e.type === "m.room.message"' ng-switch='msg.e.content.msgtype'>
                             <span ng-switch-when="m.emote"
-                                  fix-width="false && msg.e.user_id === state.user_id" 
+                                  fix-width="false && msg.e.user_id === state.user_id"
                                   ng-class="shouldHighlightEvent(msg.event) && msg.e.user_id != state.user_id ? msg.css_class + ' messageBing' : msg.css_class"
                                   ng-bind-html="'* ' + (msg.sender.name) + ' ' + msg.e.content.body | linky:'_blank'"
                                   />
                             <span ng-switch-when="m.text"
                                   class="message"
-                                  fix-width="false && msg.e.user_id === state.user_id" 
+                                  fix-width="false && msg.e.user_id === state.user_id"
                                   ng-class="shouldHighlightEvent(msg.event) && msg.e.user_id != state.user_id ? msg.css_class + ' messageBing' : msg.css_class"
                                   ng-bind-html="(msg.e.content.format === 'org.matrix.custom.html') ? (msg.e.content.formatted_body) : (msg.e.content.body | escapeHTML | unsanitizedLinky:'_blank') "/>
                             <span ng-switch-when="m.notice"
                                   class="message messageNotice"
-                                  fix-width="false && msg.e.user_id === state.user_id" 
+                                  fix-width="false && msg.e.user_id === state.user_id"
                                   ng-class="shouldHighlightEvent(msg.event) && msg.e.user_id != state.user_id ? msg.css_class + ' messageBing' : msg.css_class"
                                   ng-bind-html="(msg.e.content.format === 'org.matrix.custom.html') ? (msg.e.content.formatted_body) : (msg.e.content.body | escapeHTML | unsanitizedLinky:'_blank') "/>
                             <div ng-switch-when="m.image" style="position: relative;">
@@ -257,7 +256,7 @@
                                 </div>
                                 <a href="{{ msg.httpUri(msg.e.content.url)}}" target="_blank">{{ msg.e.content.body }}</a>
                             </span>
-                                
+
                             <span ng-switch-default
                                 ng-class="shouldHighlightEvent(msg.event) && msg.e.user_id != state.user_id ? msg.css_class + ' messageBing' : msg.css_class"
                                 ng-bind-html="msg.e.content.body | linky:'_blank'"
@@ -283,18 +282,18 @@
             </tr>
         </table>
     </div>
-        
+
     <div ng-show="state.permission_denied">
         {{ state.permission_denied }}
     </div>
-    
+
     </div>
     </div>
 
-    <div id="controlpanel-resizer" 
-        resizer="horizontal" 
-        resizer-height="5" 
-        resizer-top="#roomPage" 
+    <div id="controlpanel-resizer"
+        resizer="horizontal"
+        resizer-height="5"
+        resizer-top="#roomPage"
         resizer-bottom="#controlPanel">
     </div>
 
