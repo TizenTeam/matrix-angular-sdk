@@ -26,7 +26,7 @@ angular.module('HomeController', ['matrixService', 'eventHandlerService', 'Recen
     $scope.favourite_rooms = [];
     $scope.newRoomId = "";
     $scope.feedback = "";
-    
+
     $scope.newRoom = {
         room_id: "",
         private: false
@@ -35,77 +35,45 @@ angular.module('HomeController', ['matrixService', 'eventHandlerService', 'Recen
     $scope.joinAlias = {
         room_alias: ""
     };
-    
+
     $scope.profile = {
         displayName: "",
         avatarUrl: ""
     };
-    
+
     $scope.newChat = {
         user: ""
     };
-    
+
     recentsService.setSelectedRoomId(undefined);
-
-    var refresh = function() {
-        
-        matrixService.publicRooms().then(
-            function(response) {
-                $scope.public_rooms = response.data.chunk;
-                if (!$scope.public_rooms) return;
-                for (var i = 0; i < $scope.public_rooms.length; i++) {
-                    var room = $scope.public_rooms[i];
-                    
-                    if (room.aliases && room.aliases.length > 0) {
-                        room.room_display_name = room.aliases[0];
-                        room.room_alias = room.aliases[0];
-
-                        if (room.room_alias == "#matrix:matrix.org" || 
-                            room.room_alias == "#matrix-dev:matrix.org" || 
-                            room.room_alias == "#matrix-fr:matrix.org")
-                        {
-                            room.is_favourite = true;
-                        }
-                    }
-                    else if (room.name) {
-                        room.room_display_name = room.name;
-                    }
-                    else {
-                        room.room_display_name = room.room_id;
-                    }
-                }
-            }
-        );
-    };
-
     $scope.joinAlias = function(room_alias) {
         dialogService.showProgress(room_alias, "Joining room...", 100);
         eventHandlerService.joinRoom(room_alias).then(function(roomId) {
             $rootScope.$broadcast('dialogs.wait.complete');
             $location.url("/room/" + room_alias);
-        }, 
+        },
         function(err) {
             $rootScope.$broadcast('dialogs.wait.complete');
             dialogService.showError(err);
         });
-        
+
     };
-    
+
     // FIXME: factor this out between user-controller and home-controller etc.
     $scope.messageUser = function() {
         // FIXME: create a new room every time, for now
-        
+
         eventHandlerService.createRoom(null, 'private', [$scope.newChat.user]).then(
-            function(room_id) { 
+            function(room_id) {
                 console.log("Created room with id: "+ room_id);
                 $location.url("/room/" + room_id);
             },
             function(error) {
                 dialogService.showError(error);
             }
-        );                
+        );
     };
-    
+
     $scope.showCreateRoomDialog = function() {
         var modalInstance = $modal.open({
             templateUrl: 'createRoomTemplate.html',
@@ -114,8 +82,8 @@ angular.module('HomeController', ['matrixService', 'eventHandlerService', 'Recen
             scope: $scope
         });
     };
-    
- 
+
+
     $scope.onInit = function() {
         // Load profile data
         // Display name
@@ -129,7 +97,7 @@ angular.module('HomeController', ['matrixService', 'eventHandlerService', 'Recen
             },
             function(error) {
                 $scope.feedback = "Can't load display name";
-            } 
+            }
         );
         // Avatar
         matrixService.getProfilePictureUrl($scope.config.user_id).then(
@@ -138,7 +106,7 @@ angular.module('HomeController', ['matrixService', 'eventHandlerService', 'Recen
             },
             function(error) {
                 $scope.feedback = "Can't load avatar URL";
-            } 
+            }
         );
 
         // Listen to room creation event in order to update the public rooms list
@@ -157,7 +125,7 @@ angular.module('HomeController', ['matrixService', 'eventHandlerService', 'Recen
         $scope.public_rooms = [];
     });
 }])
-.controller('CreateRoomController', ['$scope', '$location', '$modalInstance', 'eventHandlerService', 'dialogService', 
+.controller('CreateRoomController', ['$scope', '$location', '$modalInstance', 'eventHandlerService', 'dialogService',
 function($scope, $location, $modalInstance, eventHandlerService, dialogService) {
     $scope.newRoom = {
         isPublic: false,
@@ -177,7 +145,7 @@ function($scope, $location, $modalInstance, eventHandlerService, dialogService) 
             }
         }
         eventHandlerService.createRoom(alias, isPublic).then(
-            function(roomId) { 
+            function(roomId) {
                 console.log("Created room with id: "+ roomId);
                 $modalInstance.dismiss();
                 $location.url("/room/" + roomId);

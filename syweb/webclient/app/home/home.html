@@ -52,35 +52,5 @@
       <div ng-include="'app/recents/recents.html'"></div>
       <br/>
     </div>
-    <div id="rooms">
-
-      <h3>Public rooms</h3>
-      <div class="spinner publicRoomSpinner" us-spinner ng-show="public_rooms === undefined"> </div>
-      <table class="publicTable">
-        <tbody ng-repeat="room in public_rooms | orderBy:('num_joined_members'):true"
-        class="publicRoomEntry"
-        ng-class="room.is_favourite ? 'roomHighlight' : ''">
-        <tr>
-          <td class="publicRoomEntry">
-            <a href="#/room/{{ room.room_alias ? room.room_alias : room.room_id }}"  >
-              {{ room.room_display_name }}
-            </a>
-          </td>
-          <td>
-            <div class="publicRoomJoinedUsers"
-            ng-show="room.num_joined_members">
-            {{ room.num_joined_members }} {{ room.num_joined_members == 1 ? 'user' : 'users' }}
-          </div>
-        </td>
-      </tr>
-      <tr>
-        <td colspan="2" class="publicRoomTopic">
-          {{ room.topic }}
-        </td>
-      </tr>
-    </tbody>
-  </table>
-  <br/>
-</div>
-</div>
+  </div>
 </div>
