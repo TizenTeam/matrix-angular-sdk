@@ -44,7 +44,6 @@
     #userIdCell,
     #roomRecentsTableWrapper,
     #usersTableWrapper,
-    #controlButtons,
     #sidebar-resizer,
     #callbar,
     .extraControls {
@@ -65,10 +64,6 @@
         min-height: 20px ! important;
     }
 
-    #roomHeader {
-        padding-top: 20px;
-    }
-
     .roomHeaderInfo {
         margin-right: 0px;
     }
@@ -78,15 +73,11 @@
         margin-top: 0px ! important;
     }
 
-    .roomTopicSection {
-        display: none;
-    }
-
     #roomPage {
-        top: 40px ! important;
-        left: 5px ! important;
-        right: 5px ! important;
-        bottom: 40px ! important;
+        top: 100px ! important;
+        left: 0px ! important;
+        right: 0px ! important;
+        bottom: 0px ! important;
     }
 
     #controlPanel {
