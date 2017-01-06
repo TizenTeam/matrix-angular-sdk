@@ -1,24 +1,24 @@
 /*
  Copyright 2014 OpenMarket Ltd
- 
+
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
  You may obtain a copy of the License at
- 
+
  http://www.apache.org/licenses/LICENSE-2.0
- 
+
  Unless required by applicable law or agreed to in writing, software
  distributed under the License is distributed on an "AS IS" BASIS,
  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  See the License for the specific language governing permissions and
  limitations under the License.
  */
- 
+
 angular.module('LoginController', ['matrixService'])
 .controller('LoginController', ['$scope', '$rootScope', '$location', 'matrixService', 'dialogService',
                                     function($scope, $rootScope, $location, matrixService, dialogService) {
     'use strict';
-    
+
     // Assume that this is hosted on the home server, in which case the URL
     // contains the home server.
     var location_protocol = $location.protocol();
@@ -35,14 +35,14 @@ angular.module('LoginController', ['matrixService'])
         pwd1: "",
         pwd2: "",
     };
-    
+
     $scope.login_types = [ "email", "mxid" ];
     $scope.login_type_label = {
         "email": "Email address",
         "mxid": "Matrix ID (e.g. @bob:matrix.org or bob)",
     };
     $scope.login_type = 'mxid'; // TODO: remember the user's preferred login_type
-    
+
     $scope.login = function() {
         matrixService.setConfig({
             homeserver: $scope.account.homeserver,
@@ -105,4 +105,3 @@ angular.module('LoginController', ['matrixService'])
         );
     };
 }]);
-
