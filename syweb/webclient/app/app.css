@@ -1,4 +1,4 @@
-/** Common layout **/
+#/** Common layout **/
 
 html {
   height: 100%;
@@ -381,10 +381,11 @@ input.error {
   border: 1px #ccc solid;
 }
 
-#loginForm input[type='radio'] {
-  margin-right: 1em;
+#loginForm input[type="text"],
+#loginForm input[type="password"] {
+  width: 100%;
+  margin-left: -0.5em;
 }
-
 
 #serverConfig,
 #serverConfig input,
@@ -781,6 +782,7 @@ input.error {
   width: 100%;
   border-collapse: collapse;
   table-layout: fixed;
+  margin-bottom: 24px;
 }
 
 #messageTable td {
@@ -1170,6 +1172,10 @@ blockquote p
     width:100%;
     margin: 0;
     margin-bottom: 10px;
+  }
+
+  #loginForm, input[type="text"] {
+    width: auto;
   }
 
   #wrapper {
