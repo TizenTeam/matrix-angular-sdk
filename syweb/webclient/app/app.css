@@ -1,4 +1,4 @@
-#/** Common layout **/
+/** Common layout **/
 
 html {
   height: 100%;
@@ -368,7 +368,7 @@ input.error {
 }
 
 #recaptcha_area {
-  margin: auto
+  margin: auto;
 }
 
 #loginForm {
