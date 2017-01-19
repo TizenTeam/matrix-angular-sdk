@@ -90,9 +90,9 @@ textarea
 }
 
 #leftInfos input[type="text"] {
-  padding-bottom:10px;
-  padding-top:10px;
-  width:90%;
+  padding-bottom:5px;
+  padding-top:5px;
+  width:80%;
   border: none;
   border-bottom: solid 2px #c9c9c9;
   transition: border 0.3s;
@@ -111,7 +111,7 @@ textarea
   font-size: 0.8em;
   font-weight: 900;
   letter-spacing: 2px;
-  min-width: 18em;
+  min-width: 15em;
   padding: 0.75em 0;
   text-align: center;
   text-decoration: none;
